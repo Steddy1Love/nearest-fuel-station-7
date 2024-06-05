@@ -1,6 +1,6 @@
 class MapService
-  def from(location)
-    get_url("from")
+  def route(from_location, to_location)
+    get_url("from=#{from_location}&to=#{to_location}")
   end
   
   def get_url(url)
@@ -11,5 +11,6 @@ class MapService
   def conn
     Faraday.new(url: "https://www.mapquestapi.com/directions/v2/route") do |faraday|
           faraday.params["key"] = Rails.application.credentials.mapquest[:map_key]
+    end
   end
 end
