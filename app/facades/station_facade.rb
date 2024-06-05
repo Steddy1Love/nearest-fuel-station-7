@@ -8,8 +8,9 @@ class StationFacade
   def find_elec_station(location)
     station_data = @service.nearest_station(location)
     if station_data[:fuel_type_code] == "ELEC"
-      Station.new(format_data(station_data))
+      @station = Station.new(format_data(station_data))
     end
+    @station.format_address
   end
 
   def format_data(data)
@@ -19,5 +20,13 @@ class StationFacade
       fuel_type: data[:fuel_type_code],
       access_times: data[:access_days_time]
     }
+  end
+
+  def distance(location)
+    distance_unformatted = @service.nearest_station(location)
+    if distance_unformatted[:fuel_type_code] == "ELEC"
+      distance_to_float = distance_unformatted.to_f
+      formatted_distance = sprintf('%.1f', distance_to_float)
+    end
   end
 end

@@ -10,4 +10,8 @@ class Station
     @fuel_type = data[:fuel_type]
     @access_times = data[:access_times]
   end
+
+  def format_address
+    @address.join(' ')
+  end
 end
